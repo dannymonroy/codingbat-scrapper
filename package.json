@@ -1,0 +1,23 @@
+{
+  "name": "codingbat-scrapper",
+  "version": "1.0.0",
+  "description": "A scrapper for codingbat",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dannymonroy/codingbat-scrapper.git"
+  },
+  "keywords": [
+    "web-scrapper",
+    "javascript"
+  ],
+  "author": "Danny Monroy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dannymonroy/codingbat-scrapper/issues"
+  },
+  "homepage": "https://github.com/dannymonroy/codingbat-scrapper#readme"
+}
