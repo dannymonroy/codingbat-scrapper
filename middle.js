@@ -24,6 +24,6 @@ urls.forEach(url => {
       })
     })
     .catch(function(err){
-      //handle error
+      throw err + " Something went wrong on the middle.js while creating the challange URL's";
     });
 })
