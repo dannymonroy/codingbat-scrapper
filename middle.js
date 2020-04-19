@@ -4,36 +4,43 @@ const fs = require('fs');
 
 const rawdata = fs.readFileSync('urls.json');
 const urls = JSON.parse(rawdata);
-console.log({urls});
+const obj = {
+  'http://codingbat.com/java/Warmup-1':[],
+  'http://codingbat.com/java/Warmup-2':[],
+  'http://codingbat.com/java/String-1':[],
+  'http://codingbat.com/java/Array-1':[],
+  'http://codingbat.com/java/Logic-1':[],
+  'http://codingbat.com/java/Logic-2':[],
+  'http://codingbat.com/java/String-2':[],
+  'http://codingbat.com/java/String-3':[],
+  'http://codingbat.com/java/Array-2':[],
+  'http://codingbat.com/java/Array-3':[],
+  'http://codingbat.com/java/AP-1':[],
+  'http://codingbat.com/java/Recursion-1':[],
+  'http://codingbat.com/java/Recursion-2':[],
+  'http://codingbat.com/java/Map-1':[],
+  'http://codingbat.com/java/Map-2':[],
+  'http://codingbat.com/java/Functional-1':[],
+  'http://codingbat.com/java/Functional-2':[],
+}
 
-urls.forEach(url => {
+for(const url of urls){
   rp(url)
-    .then(function(html){
+    .then((html) => {
       //success!
-      let challangeLinks = [];
-      const links = [];
       const selector = 'td > img + a';
       const leng = $(selector,html).length;
       for (let i = 0; i < leng; i++) {
-        if(i === leng){
-          links.push('"'+$(selector, html)[i].attribs.href+'"');
-        } else{
-          links.push('"'+$(selector, html)[i].attribs.href+'",');
-        }
-        challangeLinks += [...links][i];
+        obj[url].push($(selector, html)[i].attribs.href);
       }
-      return challangeLinks;
-    })
-    .then((data) => {
-      // data = `[${data}]`;
-      // //data = `"${url.substring(26, url.length)}": [${data}],\n`;
-      //   // console.log(data);
-      // fs.appendFile('middleurls.txt', data, (err) =>{
-      //   if (err) throw err;
-      //   console.log(`The challange URLs for ${url} has been created`);
-      // })
-    })
-    .catch(function(err){
-      throw err + " Something went wrong on the middle.js while creating the challange URL's";
+      return obj;
+      
+    }).then((data) => {
+      if(url === 'http://codingbat.com/java/Functional-2'){
+        fs.appendFile('middleurls.json', JSON.stringify(data), (err) =>{
+          if (err) throw err;
+          console.log(`The challange URLs has been created`);
+        })
+      }
     });
-})
+}
