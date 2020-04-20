@@ -1,8 +1,32 @@
 const puppeteer = require('puppeteer');
 const $ = require('cheerio');
+const fs = require('fs');
 const exampleUrl = 'https://codingbat.com/prob/p187868';
 const challange = {url: exampleUrl};
 
+const baseURL = 'https://codingbat.com';
+
+const rawdata = fs.readFileSync('middleurls.json');
+const urls = JSON.parse(rawdata);
+
+function objDestructuring(obj) {
+  const keys = Object.keys(obj);
+  let urls = [];
+  keys.forEach((key,i) => {
+    obj[key].forEach((elem, i) => {
+      urls.push(baseURL+obj[key][i]);
+    })
+    
+  });
+  return urls
+}
+
+const arrayOfLinks = objDestructuring(urls);
+// console.log(arrayOfLinks);
+
+arrayOfLinks.forEach(elem => {
+
+})
 puppeteer
 .launch()
 .then((browser)=>{
