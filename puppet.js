@@ -1,3 +1,7 @@
+/*TODO: 1- We need to do this for sections
+        2- Add counter to the logging while creating the challanges
+        3- Put all app together creating exports 
+        */
 const puppeteer = require('puppeteer');
 const $ = require('cheerio');
 const fs = require('fs');
