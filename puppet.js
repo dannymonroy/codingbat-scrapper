@@ -1,8 +1,7 @@
 const puppeteer = require('puppeteer');
 const $ = require('cheerio');
 const fs = require('fs');
-const exampleUrl = 'https://codingbat.com/prob/p187868';
-const challange = {url: exampleUrl};
+const challange = {};
 
 const baseURL = 'https://codingbat.com';
 
@@ -21,43 +20,42 @@ function objDestructuring(obj) {
   return urls
 }
 
-const arrayOfLinks = objDestructuring(urls);
-// console.log(arrayOfLinks);
+const arr = objDestructuring(urls);
 
-arrayOfLinks.forEach(elem => {
 
-})
-puppeteer
-.launch()
-.then((browser)=>{
-  return browser.newPage();
-})
-.then((page) => {
-  return page.goto(exampleUrl).then(() => {
-    return page.content();
-  });
-})
-.then(html => {
-  challange.name = $('span[class = "h2"]', html)[1].children[0].data;
-  challange.description = $('p[class = "max2"]', html)[0].children[0].data;
 
-  const testCases = [];
-  testCases.push($('br',html)[1].next.data);
-  testCases.push($('br',html)[2].next.data);
-  testCases.push($('br',html)[3].next.data);
+async function run (arr){
+  try{
+    for(const url of arr) {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.setDefaultNavigationTimeout(0);
+    await page.goto(url);
+    // console.log(await page.content());
+    const html = await page.content();
+    challange.name = await $('span[class = "h2"]', html)[1].children[0].data;
+    challange.description = await $('p[class = "max2"]', html)[0].children[0].data;
+  
+    const testCases = [];
+    testCases.push($('br',html)[1].next.data);
+    testCases.push($('br',html)[2].next.data);
+    testCases.push($('br',html)[3].next.data);
+  
+    challange.testcases = await testCases;
+    await createFile('final.js' , await formatChallange(challange));
+  }
+  await browser.close();
+  } catch (err) {
+    console.log("CATCHING ERRORS: " + err);
+  }
+}
 
-  challange.testcases = testCases;
-  console.log(formatChallange(challange))
-})
-.catch(err => {
-  throw err + " code: 2";
-})
+run(arr);
 
 
 function formatChallange (obj) {
   return `
   /*
-  Url: ${obj.url}
   Title: ${obj.name}
   Description: ${obj.description}
 
@@ -67,4 +65,12 @@ function formatChallange (obj) {
   ${obj.testcases[0]}
   */
   `
+}
+
+function createFile(fileName, data){
+  
+  fs.appendFile(fileName, data, (err) =>{
+    if (err) throw err;
+    console.log(`Challange created`);
+  })
 }
