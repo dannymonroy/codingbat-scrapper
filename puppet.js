@@ -1,16 +1,16 @@
-/*TODO: 1- We need to do this for sections
+/*
+  TODO: 1- We need to do this for sections
         2- Add counter to the logging while creating the challanges
         3- Put all app together creating exports 
-        */
+        4- Create Utils file
+*/
 const puppeteer = require('puppeteer');
 const $ = require('cheerio');
 const fs = require('fs');
+const utils = require('./utils.js');
 const challange = {};
 
 const baseURL = 'https://codingbat.com';
-
-const rawdata = fs.readFileSync('middleurls.json');
-const urls = JSON.parse(rawdata);
 
 function objDestructuring(obj) {
   const keys = Object.keys(obj);
@@ -24,9 +24,7 @@ function objDestructuring(obj) {
   return urls
 }
 
-const arr = objDestructuring(urls);
-
-
+const arr = objDestructuring(utils.readFile('middleurls.json'));
 
 async function run (arr){
   try{
@@ -46,7 +44,7 @@ async function run (arr){
     testCases.push($('br',html)[3].next.data);
   
     challange.testcases = await testCases;
-    await createFile('final.js' , await formatChallange(challange));
+    await utils.createFile('final.js' , await utils.formatChallange(challange), 'Challange created');
   }
   await browser.close();
   } catch (err) {
@@ -55,26 +53,3 @@ async function run (arr){
 }
 
 run(arr);
-
-
-function formatChallange (obj) {
-  return `
-  /*
-  Title: ${obj.name}
-  Description: ${obj.description}
-
-  Test Cases: 
-  ${obj.testcases[0]}
-  ${obj.testcases[0]}
-  ${obj.testcases[0]}
-  */
-  `
-}
-
-function createFile(fileName, data){
-  
-  fs.appendFile(fileName, data, (err) =>{
-    if (err) throw err;
-    console.log(`Challange created`);
-  })
-}
