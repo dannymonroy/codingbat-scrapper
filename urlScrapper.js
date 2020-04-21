@@ -1,21 +1,21 @@
 const rp = require('request-promise');
 const $ = require('cheerio');
-const fs = require('fs');
-const mainUrl = 'https://codingbat.com/java';
+const utils = require('./utils.js');
+const baseUrl = 'https://codingbat.com/java';
 
-rp(mainUrl)
-  .then(function(html){
+//TODO: Make length of the array not hardcoded.
+
+
+module.exports = async function getMainUrls () {
+  try {
+    const html = await rp(baseUrl)
     const sectionUrls = [];
     for (let i = 0; i < 17; i++) {
       sectionUrls.push(`http://codingbat.com${$('.summ > a', html)[i].attribs.href}`);
     }
-    return sectionUrls;
-  }).then(data => {
-    fs.writeFile('urls.json', JSON.stringify(data), (err) =>{
-      if (err) throw err;
-      console.log('The URL file has been created');
-    })
-  })
-  .catch(function(err){
-    console.error(`Something went wrong: ${err}`);
-  });
+    await sectionUrls;
+    await utils.createFile('uri.json', JSON.stringify(sectionUrls), 'Created main URL file'); 
+  } catch (error) {
+    console.log('Error in urlScrapper.js: ' + error);
+  }
+}
