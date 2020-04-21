@@ -14,7 +14,7 @@ module.exports = async function getMainUrls (baseUrl) {
       sectionUrls.push(`http://codingbat.com${$('.summ > a', html)[i].attribs.href}`);
     }
     await sectionUrls;
-    await utils.createFile('challangeUrls.json', JSON.stringify(sectionUrls), 'Created main URL file'); 
+    await utils.createFile('challangeUrls.json', await JSON.stringify(sectionUrls), 'Created main URL file: ChallangeUrls.json'); 
   } catch (error) {
     console.log('Error in urlScrapper.js: ' + error);
   }
