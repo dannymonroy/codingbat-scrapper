@@ -10,17 +10,19 @@ module.exports = {
     }
   },
 
-  createFile : function (fileName, data, message){ 
+  appendFile : function (fileName, data, message){ 
     fs.appendFile(fileName, data, (err) =>{
       if (err) throw 'ERROR ENCOUNTERED: ' + err;
       console.log(message);
     })
   },
 
-  formatChallange : function (obj) {
+  formatchallenge : function (obj) {
     return `
     /*
+    Url: ${obj.url}
     Title: ${obj.name}
+    Section: ${obj.section}
     Description: ${obj.description}
   
     Test Cases: 

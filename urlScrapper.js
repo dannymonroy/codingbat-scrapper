@@ -10,10 +10,17 @@ module.exports = async function getMainUrls (baseUrl) {
     const html = await rp(baseUrl)
     const sectionUrls = [];
     for (let i = 0; i < 17; i++) {
-      sectionUrls.push(`http://codingbat.com${$('.summ > a', await html)[i].attribs.href}`);
+      const temp = $('.summ > a', await html)[i].attribs.href;
+      sectionUrls.push(
+        {
+         id: i,
+         url: `http://codingbat.com${temp}`,
+         name: temp.substring(6, temp.length),
+         codes: []
+        });
     }
-     sectionUrls;
-    utils.createFile('challangeUrls.json', JSON.stringify(sectionUrls), 'Created main URL file: ChallangeUrls.json'); 
+     return sectionUrls;
+
   } catch (error) {
     console.log('Error in urlScrapper.js: ' + error);
   }

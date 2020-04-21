@@ -1,53 +1,40 @@
-/*
-  TODO: 1- We need to do this for sections
-        2- Add counter to the logging while creating the challanges
-        3- Put all app together creating exports 
-        4- Create Utils file
-*/
 const puppeteer = require('puppeteer');
 const $ = require('cheerio');
 const utils = require('./utils.js');
-const challange = {};
+const challenge = {};
 
 const baseURL = 'https://codingbat.com';
 
-
-
-
-module.exports = async function run (fileName){
-  const arr = objDestructuring(await utils.readFile(fileName));
-  try{
-    for(const url of arr) {
+module.exports = async function run (obj){
+  try {
+    obj = await JSON.parse(obj);
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     page.setDefaultNavigationTimeout(0);
-    await page.goto(url);
-    const html = await page.content();
-    challange.name = $('span[class = "h2"]', html)[1].children[0].data;
-    challange.description = $('p[class = "max2"]', html)[0].children[0].data;
-  
-    const testCases = [];
-    testCases.push($('br',html)[1].next.data);
-    testCases.push($('br',html)[2].next.data);
-    testCases.push($('br',html)[3].next.data);
-  
-    challange.testcases = testCases;
-     utils.createFile('final.js' , utils.formatChallange(challange), `Challange ${challange.name} created`);
-  }
-  await browser.close();
-  } catch (err) {
-    console.log("CATCHING ERRORS: " + err);
-  }
-}
+    for(const elem of obj) {
 
-function objDestructuring(obj) {
-  const keys = Object.keys(obj);
-  let urls = [];
-  keys.forEach((key,i) => {
-    obj[key].forEach((elem, i) => {
-      urls.push(baseURL+obj[key][i]);
-    })
-    
-  });
-  return urls
+      let url = baseURL;
+      
+      for(const code of elem.codes){
+        await page.goto(url+code);
+        let html = await page.content();
+        challenge.url = url+code
+        challenge.section = elem.name;
+        challenge.name = $('span[class = "h2"]', html)[1].children[0].data;
+        challenge.description = $('p[class = "max2"]', html)[0].children[0].data;
+          
+        const testCases = [];
+        testCases.push($('br',html)[1].next.data);
+        testCases.push($('br',html)[2].next.data);
+        testCases.push($('br',html)[3].next.data);
+          
+        challenge.testcases = testCases;
+        utils.appendFile(`./output/${elem.name}.js` , utils.formatchallenge(challenge), `Challenge ${challenge.name} created`);
+    }
+   
+  }
+  } catch (err) {
+    console.log("Error at puppet.js",err)
+  }
+
 }
