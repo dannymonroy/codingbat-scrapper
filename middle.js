@@ -1,9 +1,8 @@
 const rp = require('request-promise');
 const $ = require('cheerio');
-const fs = require('fs');
+const utils = require('./utils.js');
 
-const rawdata = fs.readFileSync('urls.json');
-const urls = JSON.parse(rawdata);
+const urls = utils.readFile('challangeUrls.json');
 
 const createLinkObj = arr => {
   const obj = {}
@@ -27,10 +26,7 @@ for(const url of urls){
       
     }).then((data) => {
       if(url === 'http://codingbat.com/java/Functional-2'){
-        fs.appendFile('middleurls.json', JSON.stringify(data), (err) =>{
-          if (err) throw err;
-          console.log(`The challange URLs has been created`);
-        })
+        utils.createFile('middleurls.json', JSON.stringify(data), 'Urls created!');
       }
     });
 }
