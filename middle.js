@@ -14,19 +14,22 @@ const createLinkObj = arr => {
 
 const problemsObj = createLinkObj(urls);
 
-for(const url of urls){
-  rp(url)
-    .then((html) => {
+async function run (problemsObj){
+  try{
+    for(const url of urls){
+      const html = await rp(url)
       const selector = 'td > img + a';
-      const leng = $(selector,html).length;
+      const leng = await $(selector,html).length;
       for (let i = 0; i < leng; i++) {
-        problemsObj[url].push($(selector, html)[i].attribs.href);
+        await problemsObj[url].push( await $(selector, html)[i].attribs.href);
       }
-      return problemsObj;
-      
-    }).then((data) => {
       if(url === 'http://codingbat.com/java/Functional-2'){
-        utils.createFile('middleurls.json', JSON.stringify(data), 'Urls created!');
+        await utils.createFile('middleurls.json', JSON.stringify(problemsObj), 'Urls created!');
       }
-    });
+    }
+  } catch (error){
+    console.log('Error in middle.js: ' + error);
+  }
 }
+
+run(problemsObj);
