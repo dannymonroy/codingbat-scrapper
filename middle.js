@@ -2,19 +2,10 @@ const rp = require('request-promise');
 const $ = require('cheerio');
 const utils = require('./utils.js');
 
-const urls = utils.readFile('challangeUrls.json');
-
-const createLinkObj = arr => {
-  const obj = {}
-  for(const elem of arr){
-    obj[elem] = [];
-  }
-  return obj
-}
-
-const problemsObj = createLinkObj(urls);
-
-async function run (problemsObj){
+module.exports = async function run (file) {
+  const urls = utils.readFile(file);
+  const problemsObj = createLinkObj(urls);
+  
   try{
     for(const url of urls){
       const html = await rp(url)
@@ -32,4 +23,10 @@ async function run (problemsObj){
   }
 }
 
-run(problemsObj);
+const createLinkObj = arr => {
+  const obj = {}
+  for(const elem of arr){
+    obj[elem] = [];
+  }
+  return obj
+}

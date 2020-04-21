@@ -33,7 +33,6 @@ async function run (arr){
     const page = await browser.newPage();
     await page.setDefaultNavigationTimeout(0);
     await page.goto(url);
-    // console.log(await page.content());
     const html = await page.content();
     challange.name = await $('span[class = "h2"]', html)[1].children[0].data;
     challange.description = await $('p[class = "max2"]', html)[0].children[0].data;
