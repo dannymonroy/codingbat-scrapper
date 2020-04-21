@@ -6,27 +6,16 @@
 */
 const puppeteer = require('puppeteer');
 const $ = require('cheerio');
-const fs = require('fs');
 const utils = require('./utils.js');
 const challange = {};
 
 const baseURL = 'https://codingbat.com';
 
-function objDestructuring(obj) {
-  const keys = Object.keys(obj);
-  let urls = [];
-  keys.forEach((key,i) => {
-    obj[key].forEach((elem, i) => {
-      urls.push(baseURL+obj[key][i]);
-    })
-    
-  });
-  return urls
-}
 
-const arr = objDestructuring(utils.readFile('middleurls.json'));
 
-async function run (arr){
+
+module.exports = async function run (fileName){
+  const arr = await objDestructuring(await utils.readFile(fileName));
   try{
     for(const url of arr) {
     const browser = await puppeteer.launch();
@@ -43,7 +32,7 @@ async function run (arr){
     testCases.push($('br',html)[3].next.data);
   
     challange.testcases = await testCases;
-    await utils.createFile('final.js' , await utils.formatChallange(challange), 'Challange created');
+    await utils.createFile('final.js' , await utils.formatChallange(challange), `Challange ${challange.name} created`);
   }
   await browser.close();
   } catch (err) {
@@ -51,4 +40,14 @@ async function run (arr){
   }
 }
 
-run(arr);
+function objDestructuring(obj) {
+  const keys = Object.keys(obj);
+  let urls = [];
+  keys.forEach((key,i) => {
+    obj[key].forEach((elem, i) => {
+      urls.push(baseURL+obj[key][i]);
+    })
+    
+  });
+  return urls
+}
