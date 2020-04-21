@@ -10,12 +10,12 @@ module.exports = async function run (file) {
     for(const url of urls){
       const html = await rp(url)
       const selector = 'td > img + a';
-      const leng = await $(selector,html).length;
+      const leng = $(selector,html).length;
       for (let i = 0; i < leng; i++) {
-        await problemsObj[url].push( await $(selector, html)[i].attribs.href);
+        await problemsObj[url].push($(selector, html)[i].attribs.href);
       }
       if(url === 'http://codingbat.com/java/Functional-2'){
-        await utils.createFile('middleurls.json', JSON.stringify(problemsObj), 'Urls created!');
+        utils.createFile('middleurls.json', JSON.stringify(problemsObj), 'Urls created!');
       }
     }
   } catch (error){

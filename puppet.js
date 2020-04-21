@@ -15,24 +15,24 @@ const baseURL = 'https://codingbat.com';
 
 
 module.exports = async function run (fileName){
-  const arr = await objDestructuring(await utils.readFile(fileName));
+  const arr = objDestructuring(await utils.readFile(fileName));
   try{
     for(const url of arr) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.setDefaultNavigationTimeout(0);
+    page.setDefaultNavigationTimeout(0);
     await page.goto(url);
     const html = await page.content();
-    challange.name = await $('span[class = "h2"]', html)[1].children[0].data;
-    challange.description = await $('p[class = "max2"]', html)[0].children[0].data;
+    challange.name = $('span[class = "h2"]', html)[1].children[0].data;
+    challange.description = $('p[class = "max2"]', html)[0].children[0].data;
   
     const testCases = [];
     testCases.push($('br',html)[1].next.data);
     testCases.push($('br',html)[2].next.data);
     testCases.push($('br',html)[3].next.data);
   
-    challange.testcases = await testCases;
-    await utils.createFile('final.js' , await utils.formatChallange(challange), `Challange ${challange.name} created`);
+    challange.testcases = testCases;
+     utils.createFile('final.js' , utils.formatChallange(challange), `Challange ${challange.name} created`);
   }
   await browser.close();
   } catch (err) {
