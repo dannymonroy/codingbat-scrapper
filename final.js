@@ -1148,3 +1148,24 @@
   love6(6, 4) → true
   love6(6, 4) → true
   */
+
+    /*
+    Title: sleepIn
+    Description: The parameter weekday is true if it is a weekday, and the parameter vacation is true if we are on vacation. We sleep in if it is not a weekday or we're on vacation. Return true if we sleep in.
+  
+    Test Cases: 
+    sleepIn(false, false) → true
+    sleepIn(false, false) → true
+    sleepIn(false, false) → true
+    */
+    
+    /*
+    Title: monkeyTrouble
+    Description: We have two monkeys, a and b, and the parameters aSmile and bSmile indicate if each is smiling. We are in trouble if they are both smiling or if neither of them is smiling. Return true if we are in trouble.
+  
+    Test Cases: 
+    monkeyTrouble(true, true) → true
+    monkeyTrouble(true, true) → true
+    monkeyTrouble(true, true) → true
+    */
+    
