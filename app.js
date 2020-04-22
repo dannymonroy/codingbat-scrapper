@@ -6,8 +6,8 @@ const puppet = require('./puppet.js');
 async function init () {
   try{
   const mainUrls = await urlScrapper(baseUrl);
-  const challengesUrls = await createMiddleUrls(mainUrls);
-  await puppet(challengesUrls);
+  const challangesUrls = await createMiddleUrls(mainUrls);
+  await puppet(challangesUrls);
   console.log('All done!');
   } catch (err) {
     console.log('Error in app.js: ', err);

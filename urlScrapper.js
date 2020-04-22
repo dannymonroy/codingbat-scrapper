@@ -6,6 +6,7 @@ const utils = require('./utils.js');
 
 
 module.exports = async function getMainUrls (baseUrl) {
+  console.log("Starting the script");
   try {
     const html = await rp(baseUrl)
     const sectionUrls = [];
@@ -19,6 +20,7 @@ module.exports = async function getMainUrls (baseUrl) {
          codes: []
         });
     }
+     console.log("Finished getting the main URL's");
      return sectionUrls;
 
   } catch (error) {
