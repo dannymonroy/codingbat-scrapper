@@ -4,7 +4,9 @@ const createMiddleUrls = require('./scripts/middle.js');
 const puppet = require('./scripts/puppet.js');
 const utils = require('./scripts/utils.js');
 
-async function init (format) {
+
+async function init () {
+  const format = await utils.prompt("What format do you want? You can type 'js' for commented Javascript and 'md' for Markdown ");
   if(utils.validateInput(format)){
     try{
       const mainUrls = await urlScrapper(baseUrl);
@@ -17,9 +19,9 @@ async function init (format) {
   } else {
     console.log('Input not valid, please select "js" for commented javascript file or "md" for Markdown');
   }
+  process.exit();
 }
 
-init('js');
-
+init();
 
 
