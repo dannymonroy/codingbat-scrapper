@@ -1,9 +1,7 @@
 const rp = require('request-promise');
 const $ = require('cheerio');
-const utils = require('./utils.js');
 
 //TODO: Make length of the array not hardcoded.
-
 
 module.exports = async function getMainUrls (baseUrl) {
   console.log("Starting the script");

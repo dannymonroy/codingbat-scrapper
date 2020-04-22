@@ -30,7 +30,7 @@ module.exports = async function run (obj, format){
         testCases.push($('br',html)[3].next.data);
           
         challenge.testcases = testCases;
-        utils.appendFile(`./output/${elem.name}.${format}` , utils.formatchallenge(challenge, format), `Challenge ${challenge.name} created`);
+        utils.appendFile(`./output/${elem.name}.${format}` , utils.formatChallenge(challenge, format), `Challenge ${challenge.name} created`);
     }
    
   }

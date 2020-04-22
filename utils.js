@@ -9,9 +9,20 @@ module.exports = {
     })
   },
 
-  formatchallenge : function (obj, options) {
-    options = options.toLowerCase().trim()
-    if(options === 'md'){
+  validateInput : function(option){
+    option = option.toLowerCase().trim();
+    if(option === 'md'){
+      return true;
+    } else if(option === 'js'){
+      return true;
+    } else {
+      return false;
+    }
+  },
+
+  formatChallenge : function (obj, option) {
+    
+    if(option === 'md'){
       return `
 #### Title: ${obj.name}
 ##### Url: ${obj.url}
@@ -23,7 +34,7 @@ module.exports = {
 3. ${obj.testcases[2]}
     
 `.replace('\\','');
-    } else if(options === 'js'){
+    } else if(option === 'js'){
       return `
       /*
       Title: ${obj.name}
