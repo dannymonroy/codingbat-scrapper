@@ -6,7 +6,7 @@ const $ = require('cheerio');
 module.exports = async function getMainUrls (baseUrl) {
   console.log("Starting the script");
   try {
-    const html = await rp(baseUrl)
+    const html = await rp(baseUrl);
     const sectionUrls = [];
     for (let i = 0; i < 17; i++) {
       const temp = $('.summ > a', await html)[i].attribs.href;

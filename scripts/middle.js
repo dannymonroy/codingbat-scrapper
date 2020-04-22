@@ -6,10 +6,10 @@ module.exports = async function run(arr) {
   try {
     const selector = 'td > img + a';
     for(let i = 0; i< arr.length; i++){
-      const html = await rp(arr[i].url)
+      const html = await rp(arr[i].url);
       const leng = $(selector,html).length;
       for(let j = 0; j<leng; j++){
-        let leng = ($(selector, html)[j].attribs.href).length
+        let leng = ($(selector, html)[j].attribs.href).length;
         arr[i].codes.push($(selector, html)[j].attribs.href.substr(7, leng));
       }
     }

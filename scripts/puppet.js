@@ -19,7 +19,7 @@ module.exports = async function run (obj, format){
       for(const code of elem.codes){
         await page.goto(url+code);
         let html = await page.content();
-        challenge.url = url+code
+        challenge.url = url+code;
         challenge.section = elem.name;
         challenge.name = $('span[class = "h2"]', html)[1].children[0].data;
         challenge.description = $('p[class = "max2"]', html)[0].children[0].data;
@@ -35,7 +35,7 @@ module.exports = async function run (obj, format){
    
   }
   } catch (err) {
-    console.log("Error at puppet.js",err)
+    console.log("Error at puppet.js",err);
   }
 
 }
