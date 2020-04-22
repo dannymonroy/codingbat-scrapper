@@ -1,15 +1,7 @@
 const fs = require('fs');
 
 module.exports = {
-  readFile : function (fileName) {
-    try{
-    const rawdata = fs.readFileSync(fileName);
-    return JSON.parse(rawdata);
-    } catch (err){
-      console.log(err);
-    }
-  },
-
+  
   appendFile : function (fileName, data, message){ 
     fs.appendFile(fileName, data, (err) =>{
       if (err) throw 'ERROR ENCOUNTERED: ' + err;
