@@ -6,20 +6,25 @@ If you want to practice with any other programming language, or you would prefer
 
 It will leave you with either a commented javascript file or markdown files for each section.
 
-How to use
+How to use:
 
-Clone repository
+1. Clone repository
 
-In the main folder run
+```bash
+ git clone https://github.com/dannymonroy/codingbat-scrapper.git
+```
 
-```javascript
+2. In the repository folder run:
+
+```bash
 npm install
 ```
 
-Change the main `app.js` method `init()` to pass an argument to the option chosen, either `js` or `md` for javascript or markdown respectively then run:
+3. Then run: 
 
-```
+```bash
 node app.js
 ```
+4. The script will prompt you in terminal for a format file, you can pick 'js' or 'md' depending on your preference.
 
-The script will create the files in a folder called output. Happy coding.
+After a few seconds the script will create the files in a folder called output. Happy coding.
