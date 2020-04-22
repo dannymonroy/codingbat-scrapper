@@ -4,6 +4,7 @@ const utils = require('./utils.js');
 const challenge = {};
 
 const baseURL = 'https://codingbat.com';
+const middleUrl = '/prob/p';
 
 module.exports = async function run (obj){
   try {
@@ -13,7 +14,7 @@ module.exports = async function run (obj){
     page.setDefaultNavigationTimeout(0);
     for(const elem of obj) {
 
-      let url = baseURL;
+      let url = baseURL+middleUrl;
       
       for(const code of elem.codes){
         await page.goto(url+code);

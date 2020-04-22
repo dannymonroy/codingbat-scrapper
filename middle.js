@@ -9,11 +9,11 @@ module.exports = async function run(arr) {
       const html = await rp(arr[i].url)
       const leng = $(selector,html).length;
       for(let j = 0; j<leng; j++){
-        arr[i].codes.push($(selector, html)[j].attribs.href)
+        let leng = ($(selector, html)[j].attribs.href).length
+        arr[i].codes.push($(selector, html)[j].attribs.href.substr(7, leng));
       }
     }
-    console.log("Done getting middle URL's");
-    return JSON.stringify(arr);
+     return JSON.stringify(arr);
   } catch (err) {
     console.log('Error in middle.js: ' + err);
   }
