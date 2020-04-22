@@ -6,7 +6,7 @@ const challenge = {};
 const baseURL = 'https://codingbat.com';
 const middleUrl = '/prob/p';
 
-module.exports = async function run (obj){
+module.exports = async function run (obj, format){
   try {
     obj = await JSON.parse(obj);
     const browser = await puppeteer.launch();
@@ -30,7 +30,7 @@ module.exports = async function run (obj){
         testCases.push($('br',html)[3].next.data);
           
         challenge.testcases = testCases;
-        utils.appendFile(`./output/${elem.name}.js` , utils.formatchallenge(challenge), `Challenge ${challenge.name} created`);
+        utils.appendFile(`./output/${elem.name}.${format}` , utils.formatchallenge(challenge, format), `Challenge ${challenge.name} created`);
     }
    
   }
