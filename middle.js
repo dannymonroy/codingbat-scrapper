@@ -1,32 +1,20 @@
 const rp = require('request-promise');
 const $ = require('cheerio');
-const utils = require('./utils.js');
 
-module.exports = async function run (file) {
-  const urls = utils.readFile(file);
-  const problemsObj = createLinkObj(urls);
-  
-  try{
-    for(const url of urls){
-      const html = await rp(url)
-      const selector = 'td > img + a';
+module.exports = async function run(arr) {
+  console.log("Starting getting the middle section URL's");
+  try {
+    const selector = 'td > img + a';
+    for(let i = 0; i< arr.length; i++){
+      const html = await rp(arr[i].url)
       const leng = $(selector,html).length;
-      for (let i = 0; i < leng; i++) {
-        await problemsObj[url].push($(selector, html)[i].attribs.href);
-      }
-      if(url === 'http://codingbat.com/java/Functional-2'){
-        utils.createFile('middleurls.json', JSON.stringify(problemsObj), 'Urls created!');
+      for(let j = 0; j<leng; j++){
+        arr[i].codes.push($(selector, html)[j].attribs.href)
       }
     }
-  } catch (error){
-    console.log('Error in middle.js: ' + error);
+    console.log("Done getting middle URL's");
+    return JSON.stringify(arr);
+  } catch (err) {
+    console.log('Error in middle.js: ' + err);
   }
-}
-
-const createLinkObj = arr => {
-  const obj = {}
-  for(const elem of arr){
-    obj[elem] = [];
-  }
-  return obj
 }
