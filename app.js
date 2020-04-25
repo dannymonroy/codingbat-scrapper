@@ -6,7 +6,7 @@ const utils = require('./scripts/utils.js');
 
 
 async function init () {
-  const format = await utils.prompt("What format do you want? You can type 'js' for commented Javascript and 'md' for Markdown ");
+  const format = await utils.prompt("What format do you want? \nYou can type:\n 'js' for commented Javascript\n 'md' for Markdown\n 'txt' for Text file \n");
   if(utils.validateInput(format)){
     try{
       const mainUrls = await urlScrapper(baseUrl);

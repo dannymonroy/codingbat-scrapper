@@ -26,6 +26,8 @@ module.exports = {
       return true;
     } else if(option === 'js'){
       return true;
+    } else if(option === 'txt'){
+      return true;
     } else {
       return false;
     }
@@ -59,6 +61,18 @@ module.exports = {
       ${obj.testcases[2]}
       */
       `
+    } else if(option === 'txt') {
+return `
+Title: ${obj.name}
+Url: ${obj.url}
+Section: ${obj.section}
+Description: ${obj.description}
+
+Test Cases: 
+${obj.testcases[0]}
+${obj.testcases[1]}
+${obj.testcases[2]}
+`
     } else {
       throw new Error('Not a valid format');
     }
