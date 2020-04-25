@@ -4,7 +4,7 @@ This is a small scrapping script to get all challenges from a beginners coding c
 
 If you want to practice with any other programming language, or you would prefer to have an offline reference you can use this script.
 
-It will leave you with either a commented javascript file or markdown files for each section.
+As an output you can pick between a commented .js file, a semi-formatted markdown file or a plain text file.
 
 How to use:
 
@@ -25,6 +25,6 @@ npm install
 ```bash
 node app.js
 ```
-4. The script will prompt you in terminal for a format file, you can pick 'js' or 'md' depending on your preference.
+4. The script will prompt you in terminal for a format file, you can pick 'js', 'md' or 'txt' depending on your preference.
 
 After a few seconds the script will create the files in a folder called output. Happy coding.
