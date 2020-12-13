@@ -6,7 +6,7 @@ const utils = require('./scripts/utils.js');
 
 
 async function init () {
-  const format = await utils.prompt("What format do you want? \nYou can type:\n 'js' for commented Javascript\n 'md' for Markdown\n 'txt' for Text file \n");
+  const format = await utils.prompt("What format do you want? \nYou can type:\n 'js' for commented Javascript\n 'md' for Markdown\n 'txt' for Text file \n 'py' for Python\n");
   if(utils.validateInput(format)){
     try{
       const mainUrls = await urlScrapper(baseUrl);
@@ -17,7 +17,7 @@ async function init () {
       console.log('Error in app.js: ', err);
     }
   } else {
-    console.log('Input not valid, please select "js" for commented javascript file or "md" for Markdown');
+    console.log('Input not valid, please select "js" for commented javascript file, "md" for Markdown or "py" for Python');
   }
   process.exit();
 }

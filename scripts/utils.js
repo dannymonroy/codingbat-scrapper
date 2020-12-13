@@ -1,41 +1,37 @@
-const fs = require('fs');
+const fs = require("fs");
 const { stdin, stdout } = process;
 
 module.exports = {
-
-  prompt : function (question) {
+  prompt: function (question) {
     return new Promise((resolve, reject) => {
       stdin.resume();
       stdout.write(question);
-  
-      stdin.on('data', data => resolve(data.toString().trim()));
-      stdin.on('error', err => reject(err));
+
+      stdin.on("data", (data) => resolve(data.toString().trim()));
+      stdin.on("error", (err) => reject(err));
     });
   },
-  
-  appendFile : function (fileName, data, message){ 
-    fs.appendFile(fileName, data, (err) =>{
-      if (err) throw 'ERROR ENCOUNTERED: ' + err;
+
+  appendFile: function (fileName, data, message) {
+    fs.appendFile(fileName, data, (err) => {
+      if (err) throw "ERROR ENCOUNTERED: " + err;
       console.log(message);
-    })
+    });
   },
 
-  validateInput : function(option){
+  validateInput: function (option) {
     option = option.toLowerCase().trim();
-    if(option === 'md'){
-      return true;
-    } else if(option === 'js'){
-      return true;
-    } else if(option === 'txt'){
-      return true;
-    } else {
+    if (option === "md") return true;
+    else if (option === "js") return true;
+    else if (option === "txt") return true;
+    else if (option === "py") return true;
+    else {
       return false;
     }
   },
 
-  formatChallenge : function (obj, option) {
-    
-    if(option === 'md'){
+  formatChallenge: function (obj, option) {
+    if (option === "md") {
       return `
 #### Title: ${obj.name}
 ##### Url: ${obj.url}
@@ -46,8 +42,8 @@ module.exports = {
 2. ${obj.testcases[1]}  
 3. ${obj.testcases[2]}
     
-`.replace('\\','');
-    } else if(option === 'js'){
+`.replace("\\", "");
+    } else if (option === "js") {
       return `
       /*
       Title: ${obj.name}
@@ -60,9 +56,9 @@ module.exports = {
       ${obj.testcases[1]}
       ${obj.testcases[2]}
       */
-      `
-    } else if(option === 'txt') {
-return `
+      `;
+    } else if (option === "txt") {
+      return `
 Title: ${obj.name}
 Url: ${obj.url}
 Section: ${obj.section}
@@ -72,9 +68,22 @@ Test Cases:
 ${obj.testcases[0]}
 ${obj.testcases[1]}
 ${obj.testcases[2]}
-`
+`;
+    } else if (option === "py") {
+      return `
+      '''\n
+      Title: ${obj.name}
+      Url: ${obj.url}
+      Section: ${obj.section}
+      Description: ${obj.description}
+    
+      Test Cases: 
+      ${obj.testcases[0]}
+      ${obj.testcases[1]}
+      ${obj.testcases[2]}
+      '''\n`;
     } else {
-      throw new Error('Not a valid format');
+      throw new Error("Not a valid format");
     }
-  }
-}
+  },
+};
